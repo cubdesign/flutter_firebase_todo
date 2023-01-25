@@ -21,6 +21,7 @@ samples, guidance on mobile development, and a full API reference.
 firebase login
 dart pub global activate flutterfire_cli
 flutterfire configure --project=flutter-firebase-todo-b08e5
+flutter pub get
 ```
 
 ## 参考
