@@ -29,6 +29,18 @@ class _TasksState extends State<Tasks> {
                     document.data()! as Map<String, dynamic>;
                 return Container(
                   height: 100,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(15.0),
+                    boxShadow: const [
+                      BoxShadow(
+                        color: Colors.black12,
+                        blurRadius: 5.0,
+                        spreadRadius: 1.0,
+                        offset: Offset(0.0, 5),
+                      ),
+                    ],
+                  ),
                   margin: const EdgeInsets.only(bottom: 15.0),
                   child: ListTile(
                     title: Text(data['taskName']),
