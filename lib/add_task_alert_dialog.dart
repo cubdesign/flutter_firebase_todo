@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class AddTaskAlertDialog extends StatefulWidget {
@@ -10,6 +11,9 @@ class AddTaskAlertDialog extends StatefulWidget {
 }
 
 class _AddTaskAlertDialogState extends State<AddTaskAlertDialog> {
+  final TextEditingController taskNameController = TextEditingController();
+  final TextEditingController taskDescController = TextEditingController();
+
   final List<String> taskTags = ['Work', 'School', 'Other'];
   late String selectedValue = '';
 
@@ -32,6 +36,7 @@ class _AddTaskAlertDialogState extends State<AddTaskAlertDialog> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               TextFormField(
+                controller: taskNameController,
                 style: const TextStyle(fontSize: 14),
                 decoration: InputDecoration(
                   contentPadding: const EdgeInsets.symmetric(
@@ -48,6 +53,7 @@ class _AddTaskAlertDialogState extends State<AddTaskAlertDialog> {
               ),
               const SizedBox(height: 15),
               TextFormField(
+                controller: taskDescController,
                 keyboardType: TextInputType.multiline,
                 maxLines: null,
                 style: const TextStyle(fontSize: 14),
@@ -115,15 +121,36 @@ class _AddTaskAlertDialogState extends State<AddTaskAlertDialog> {
         ElevatedButton(
           onPressed: () {},
           style: ElevatedButton.styleFrom(
-            primary: Colors.grey,
+            backgroundColor: Colors.grey,
           ),
           child: const Text('Cancel'),
         ),
         ElevatedButton(
-          onPressed: () {},
+          onPressed: () {
+            final taskName = taskNameController.text;
+            final taskDesc = taskDescController.text;
+            final taskTag = selectedValue;
+            _addTasks(taskName, taskDesc, taskTag);
+          },
           child: const Text('Save'),
         ),
       ],
     );
+  }
+
+  Future _addTasks(taskName, taskDesc, taskTag) async {
+    DocumentReference docRef = await FirebaseFirestore.instance
+        .collection('tasks')
+        .add({'taskName': taskName, 'taskDesc': taskDesc, 'taskTag': taskTag});
+    String taskId = docRef.id;
+    await FirebaseFirestore.instance.collection('tasks').doc(taskId).update(
+      {'id': taskId},
+    );
+    _clearAll();
+  }
+
+  void _clearAll() {
+    taskNameController.clear();
+    taskDescController.clear();
   }
 }
