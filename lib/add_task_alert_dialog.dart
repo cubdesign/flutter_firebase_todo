@@ -10,6 +10,9 @@ class AddTaskAlertDialog extends StatefulWidget {
 }
 
 class _AddTaskAlertDialogState extends State<AddTaskAlertDialog> {
+  final List<String> taskTags = ['Work', 'School', 'Other'];
+  late String selectedValue = '';
+
   @override
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
@@ -55,8 +58,7 @@ class _AddTaskAlertDialogState extends State<AddTaskAlertDialog> {
                   ),
                   hintText: 'Description',
                   hintStyle: const TextStyle(fontSize: 14),
-                  icon: const Icon(Icons.chat_bubble_outline,
-                      color: Colors.brown),
+                  icon: const Icon(Icons.forum_outlined, color: Colors.brown),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(15),
                   ),
@@ -64,11 +66,47 @@ class _AddTaskAlertDialogState extends State<AddTaskAlertDialog> {
               ),
               const SizedBox(height: 15),
               Row(
-                children: const <Widget>[
-                  Icon(Icons.tag, color: Colors.brown),
-                  SizedBox(width: 15.0),
+                children: <Widget>[
+                  const Icon(Icons.discount_outlined, color: Colors.brown),
+                  const SizedBox(width: 15.0),
+                  Expanded(
+                    child: DropdownButtonFormField(
+                      decoration: InputDecoration(
+                        isDense: true,
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(15),
+                        ),
+                      ),
+
+                      isExpanded: true,
+                      hint: const Text(
+                        'Add a task tag',
+                        style: TextStyle(fontSize: 14),
+                      ),
+                      // validator: (value) => value == null
+                      //     ? 'Please select the task tag' : null,
+                      items: taskTags
+                          .map(
+                            (item) => DropdownMenuItem<String>(
+                              value: item,
+                              child: Text(
+                                item,
+                                style: const TextStyle(
+                                  fontSize: 14,
+                                ),
+                              ),
+                            ),
+                          )
+                          .toList(),
+                      onChanged: (String? value) => setState(
+                        () {
+                          if (value != null) selectedValue = value;
+                        },
+                      ),
+                    ),
+                  ),
                 ],
-              ),
+              )
             ],
           ),
         ),
