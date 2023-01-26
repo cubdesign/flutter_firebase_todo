@@ -2,9 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class AddTaskAlertDialog extends StatefulWidget {
-  const AddTaskAlertDialog({super.key, required this.title});
-
-  final String title;
+  const AddTaskAlertDialog({super.key});
 
   @override
   State<AddTaskAlertDialog> createState() => _AddTaskAlertDialogState();
@@ -119,7 +117,9 @@ class _AddTaskAlertDialogState extends State<AddTaskAlertDialog> {
       ),
       actions: [
         ElevatedButton(
-          onPressed: () {},
+          onPressed: () {
+            Navigator.of(context, rootNavigator: true).pop();
+          },
           style: ElevatedButton.styleFrom(
             backgroundColor: Colors.grey,
           ),
@@ -131,6 +131,7 @@ class _AddTaskAlertDialogState extends State<AddTaskAlertDialog> {
             final taskDesc = taskDescController.text;
             final taskTag = selectedValue;
             _addTasks(taskName, taskDesc, taskTag);
+            Navigator.of(context, rootNavigator: true).pop();
           },
           child: const Text('Save'),
         ),

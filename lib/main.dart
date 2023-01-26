@@ -1,7 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_firebase_todo/add_task_alert_dialog.dart';
-import 'package:flutter_firebase_todo/my_home_page.dart';
+import 'package:flutter_firebase_todo/home_page.dart';
 
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -20,8 +20,7 @@ class TodoApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      // home: const MyHomePage(title: 'To-Do List'),
-      home: const AddTaskAlertDialog(title: 'AddTaskAlertDialog'),
+      home: const MyHomePage(title: 'To-Do List'),
     );
   }
 }

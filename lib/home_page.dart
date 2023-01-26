@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'add_task_alert_dialog.dart';
+
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});
 
@@ -45,9 +47,15 @@ class _MyHomePageState extends State<MyHomePage> {
           ],
         ),
       ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
+        onPressed: () {
+          showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return const AddTaskAlertDialog();
+              });
+        },
         child: const Icon(Icons.add),
       ), // This trailing comma makes auto-formatting nicer for build methods.
     );
