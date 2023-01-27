@@ -63,6 +63,57 @@ class _TasksState extends State<Tasks> {
                     title: Text(data['taskName']),
                     subtitle: Text(data['taskDesc']),
                     isThreeLine: true,
+                    trailing: PopupMenuButton(
+                      itemBuilder: (context) {
+                        return [
+                          PopupMenuItem(
+                            value: 'edit',
+                            child: const Text(
+                              'Edit',
+                              style: TextStyle(fontSize: 13.0),
+                            ),
+                            onTap: () {
+                              String taskId = (data['id']);
+                              String taskName = (data['taskName']);
+                              String taskDesc = (data['taskDesc']);
+                              String taskTag = (data['taskTag']);
+                              // Future.delayed(
+                              //   const Duration(seconds: 0),
+                              //   () => showDialog(
+                              //     context: context,
+                              //     builder: (context) => UpdateTaskAlertDialog(
+                              //       taskId: taskId,
+                              //       taskName: taskName,
+                              //       taskDesc: taskDesc,
+                              //       taskTag: taskTag,
+                              //     ),
+                              //   ),
+                              // );
+                            },
+                          ),
+                          PopupMenuItem(
+                            value: 'delete',
+                            child: const Text(
+                              'Delete',
+                              style: TextStyle(fontSize: 13.0),
+                            ),
+                            onTap: () {
+                              String taskId = (data['id']);
+                              String taskName = (data['taskName']);
+                              // Future.delayed(
+                              //   const Duration(seconds: 0),
+                              //   () => showDialog(
+                              //     context: context,
+                              //     builder: (context) => DeleteTaskDialog(
+                              //         taskId: taskId, taskName: taskName),
+                              //   ),
+                              // );
+                            },
+                          ),
+                        ];
+                      },
+                    ),
+                    dense: true,
                   ),
                 );
               }).toList(),
