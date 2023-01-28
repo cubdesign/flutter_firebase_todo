@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_firebase_todo/update_task_alert_dialog.dart';
 import 'package:flutter_firebase_todo/utils/app_colors.dart';
 
 class Tasks extends StatefulWidget {
@@ -77,18 +78,18 @@ class _TasksState extends State<Tasks> {
                               String taskName = (data['taskName']);
                               String taskDesc = (data['taskDesc']);
                               String taskTag = (data['taskTag']);
-                              // Future.delayed(
-                              //   const Duration(seconds: 0),
-                              //   () => showDialog(
-                              //     context: context,
-                              //     builder: (context) => UpdateTaskAlertDialog(
-                              //       taskId: taskId,
-                              //       taskName: taskName,
-                              //       taskDesc: taskDesc,
-                              //       taskTag: taskTag,
-                              //     ),
-                              //   ),
-                              // );
+                              Future.delayed(
+                                const Duration(seconds: 0),
+                                () => showDialog(
+                                  context: context,
+                                  builder: (context) => UpdateTaskAlertDialog(
+                                    taskId: taskId,
+                                    taskName: taskName,
+                                    taskDesc: taskDesc,
+                                    taskTag: taskTag,
+                                  ),
+                                ),
+                              );
                             },
                           ),
                           PopupMenuItem(
