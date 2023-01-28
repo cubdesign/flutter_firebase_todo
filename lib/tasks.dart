@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_firebase_todo/delete_task_alert_dialog.dart';
 import 'package:flutter_firebase_todo/update_task_alert_dialog.dart';
 import 'package:flutter_firebase_todo/utils/app_colors.dart';
 
@@ -101,14 +102,14 @@ class _TasksState extends State<Tasks> {
                             onTap: () {
                               String taskId = (data['id']);
                               String taskName = (data['taskName']);
-                              // Future.delayed(
-                              //   const Duration(seconds: 0),
-                              //   () => showDialog(
-                              //     context: context,
-                              //     builder: (context) => DeleteTaskDialog(
-                              //         taskId: taskId, taskName: taskName),
-                              //   ),
-                              // );
+                              Future.delayed(
+                                const Duration(seconds: 0),
+                                () => showDialog(
+                                  context: context,
+                                  builder: (context) => DeleteTaskAlertDialog(
+                                      taskId: taskId, taskName: taskName),
+                                ),
+                              );
                             },
                           ),
                         ];
