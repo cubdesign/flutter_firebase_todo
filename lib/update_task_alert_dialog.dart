@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_firebase_todo/app_config.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 class UpdateTaskAlertDialog extends StatefulWidget {
@@ -21,7 +22,7 @@ class _UpdateTaskAlertDialogState extends State<UpdateTaskAlertDialog> {
   final TextEditingController taskNameController = TextEditingController();
   final TextEditingController taskDescController = TextEditingController();
 
-  final List<String> taskTags = ['Work', 'School', 'Other'];
+  final List<String> taskTags = AppConfig().tags;
   late String selectedValue = '';
 
   @override
