@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_firebase_todo/tasks.dart';
 
@@ -15,6 +16,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
+    final FirebaseFirestore firestore = FirebaseFirestore.instance;
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
@@ -27,7 +29,7 @@ class _HomePageState extends State<HomePage> {
         centerTitle: true,
       ),
       body: PageView(
-        children: const <Widget>[Center(child: Tasks())],
+        children: <Widget>[Center(child: Tasks(firestore: firestore))],
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: FloatingActionButton(

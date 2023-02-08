@@ -9,6 +9,7 @@ import 'package:fake_cloud_firestore/fake_cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_firebase_todo/firebase_options.dart';
+import 'package:flutter_firebase_todo/tasks.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'package:flutter_firebase_todo/main.dart';
@@ -22,7 +23,11 @@ void main() {
         .add({'taskName': "タスク名", 'taskDesc': "説明", 'taskTag': "Work"});
 
     // Build our app and trigger a frame.
-    await tester.pumpWidget(const TodoApp());
+    await tester.pumpWidget(MaterialApp(
+      home: Tasks(
+        firestore: firestore,
+      ),
+    ));
 
     // Verify that our counter starts at 0.
     // expect(find.text('0'), findsOneWidget);

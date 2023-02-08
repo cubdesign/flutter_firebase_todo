@@ -18,7 +18,6 @@ Future main() async {
 }
 
 Future<List<String>> fetchTags() async {
-  print("fetchTags()");
   final fireStore = FirebaseFirestore.instance;
   final collectionRef = fireStore.collection('task-tags');
   final querySnapshot = await collectionRef.get();

@@ -5,8 +5,10 @@ import 'package:flutter_firebase_todo/update_task_alert_dialog.dart';
 import 'package:flutter_firebase_todo/utils/app_colors.dart';
 
 class Tasks extends StatefulWidget {
+  final FirebaseFirestore firestore;
   const Tasks({
     super.key,
+    required this.firestore,
   });
 
   @override
@@ -14,14 +16,14 @@ class Tasks extends StatefulWidget {
 }
 
 class _TasksState extends State<Tasks> {
-  final fireStore = FirebaseFirestore.instance;
-
   @override
   Widget build(BuildContext context) {
+    final FirebaseFirestore firestore = widget.firestore;
+
     return Container(
       margin: const EdgeInsets.all(10.0),
       child: StreamBuilder<QuerySnapshot>(
-        stream: fireStore.collection('tasks').snapshots(),
+        stream: firestore.collection('tasks').snapshots(),
         builder: (context, snapshot) {
           if (!snapshot.hasData) {
             return const Text('No tasks to display');
