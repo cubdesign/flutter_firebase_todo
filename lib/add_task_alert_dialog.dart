@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_firebase_todo/app_config.dart';
 
 class AddTaskAlertDialog extends StatefulWidget {
-  const AddTaskAlertDialog({super.key});
+  final FirebaseFirestore firestore;
+  const AddTaskAlertDialog({Key? Key, required this.firestore})
+      : super(key: Key);
 
   @override
   State<AddTaskAlertDialog> createState() => _AddTaskAlertDialogState();
@@ -141,7 +143,9 @@ class _AddTaskAlertDialogState extends State<AddTaskAlertDialog> {
   }
 
   Future _addTasks(taskName, taskDesc, taskTag) async {
-    DocumentReference docRef = await FirebaseFirestore.instance
+    final FirebaseFirestore firestore = widget.firestore;
+
+    DocumentReference docRef = await firestore
         .collection('tasks')
         .add({'taskName': taskName, 'taskDesc': taskDesc, 'taskTag': taskTag});
     String taskId = docRef.id;

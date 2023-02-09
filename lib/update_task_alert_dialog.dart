@@ -5,9 +5,11 @@ import 'package:fluttertoast/fluttertoast.dart';
 
 class UpdateTaskAlertDialog extends StatefulWidget {
   final String taskId, taskName, taskDesc, taskTag;
+  final FirebaseFirestore firestore;
 
   const UpdateTaskAlertDialog(
       {Key? Key,
+      required this.firestore,
       required this.taskId,
       required this.taskName,
       required this.taskDesc,
@@ -157,8 +159,10 @@ class _UpdateTaskAlertDialogState extends State<UpdateTaskAlertDialog> {
   }
 
   Future _updateTasks(taskName, taskDesc, taskTag) async {
-    var collection = FirebaseFirestore.instance
-        .collection('tasks'); // fetch the collection name i.e. tasks
+    final FirebaseFirestore firestore = widget.firestore;
+
+    var collection =
+        firestore.collection('tasks'); // fetch the collection name i.e. tasks
     collection
         .doc(widget
             .taskId) // ensure the right task is updated by referencing the task id in the method

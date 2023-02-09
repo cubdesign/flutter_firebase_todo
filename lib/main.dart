@@ -10,11 +10,12 @@ Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   await Firebase.initializeApp();
+  final FirebaseFirestore firestore = FirebaseFirestore.instance;
 
   final tags = await fetchTags();
   AppConfig().tags = tags;
 
-  runApp(const TodoApp());
+  runApp(TodoApp(firestore: firestore));
 }
 
 Future<List<String>> fetchTags() async {
@@ -31,7 +32,9 @@ Future<List<String>> fetchTags() async {
 }
 
 class TodoApp extends StatelessWidget {
-  const TodoApp({super.key});
+  final FirebaseFirestore firestore;
+
+  const TodoApp({super.key, required this.firestore});
 
   // This widget is the root of your application.
   @override
@@ -41,7 +44,7 @@ class TodoApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const HomePage(title: 'To-Do List'),
+      home: HomePage(title: 'To-Do List', firestore: firestore),
     );
   }
 }

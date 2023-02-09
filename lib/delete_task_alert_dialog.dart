@@ -4,9 +4,13 @@ import 'package:fluttertoast/fluttertoast.dart';
 
 class DeleteTaskAlertDialog extends StatefulWidget {
   final String taskId, taskName;
+  final FirebaseFirestore firestore;
 
   const DeleteTaskAlertDialog(
-      {Key? Key, required this.taskId, required this.taskName})
+      {Key? Key,
+      required this.firestore,
+      required this.taskId,
+      required this.taskName})
       : super(key: Key);
 
   @override
@@ -64,7 +68,9 @@ class _DeleteTaskAlertDialogState extends State<DeleteTaskAlertDialog> {
   }
 
   Future _deleteTasks() async {
-    var collection = FirebaseFirestore.instance.collection('tasks');
+    final FirebaseFirestore firestore = widget.firestore;
+
+    var collection = firestore.collection('tasks');
     collection
         .doc(widget.taskId)
         .delete()

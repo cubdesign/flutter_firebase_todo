@@ -5,9 +5,10 @@ import 'package:flutter_firebase_todo/tasks.dart';
 import 'add_task_alert_dialog.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({super.key, required this.title});
+  const HomePage({super.key, required this.firestore, required this.title});
 
   final String title;
+  final FirebaseFirestore firestore;
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -16,7 +17,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
-    final FirebaseFirestore firestore = FirebaseFirestore.instance;
+    final FirebaseFirestore firestore = widget.firestore;
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
@@ -37,7 +38,7 @@ class _HomePageState extends State<HomePage> {
           showDialog(
               context: context,
               builder: (BuildContext context) {
-                return const AddTaskAlertDialog();
+                return AddTaskAlertDialog(firestore: firestore);
               });
         },
         child: const Icon(Icons.add),

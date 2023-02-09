@@ -86,6 +86,7 @@ class _TasksState extends State<Tasks> {
                                 () => showDialog(
                                   context: context,
                                   builder: (context) => UpdateTaskAlertDialog(
+                                    firestore: firestore,
                                     taskId: taskId,
                                     taskName: taskName,
                                     taskDesc: taskDesc,
@@ -109,7 +110,9 @@ class _TasksState extends State<Tasks> {
                                 () => showDialog(
                                   context: context,
                                   builder: (context) => DeleteTaskAlertDialog(
-                                      taskId: taskId, taskName: taskName),
+                                      firestore: firestore,
+                                      taskId: taskId,
+                                      taskName: taskName),
                                 ),
                               );
                             },
