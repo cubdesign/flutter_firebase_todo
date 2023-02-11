@@ -1,8 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_firebase_todo/delete_task_alert_dialog.dart';
-import 'package:flutter_firebase_todo/update_task_alert_dialog.dart';
-import 'package:flutter_firebase_todo/utils/app_colors.dart';
+import 'package:flutter_firebase_todo/widgets/delete_task_alert_dialog.dart';
+import 'package:flutter_firebase_todo/widgets/update_task_alert_dialog.dart';
+import 'package:flutter_firebase_todo/app/app_colors.dart';
 
 class Tasks extends StatefulWidget {
   final FirebaseFirestore firestore;

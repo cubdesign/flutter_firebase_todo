@@ -1,26 +1,17 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_firebase_todo/app_config.dart';
-import 'package:fluttertoast/fluttertoast.dart';
+import 'package:flutter_firebase_todo/app/app_config.dart';
 
-class UpdateTaskAlertDialog extends StatefulWidget {
-  final String taskId, taskName, taskDesc, taskTag;
+class AddTaskAlertDialog extends StatefulWidget {
   final FirebaseFirestore firestore;
-
-  const UpdateTaskAlertDialog(
-      {Key? Key,
-      required this.firestore,
-      required this.taskId,
-      required this.taskName,
-      required this.taskDesc,
-      required this.taskTag})
+  const AddTaskAlertDialog({Key? Key, required this.firestore})
       : super(key: Key);
 
   @override
-  State<UpdateTaskAlertDialog> createState() => _UpdateTaskAlertDialogState();
+  State<AddTaskAlertDialog> createState() => _AddTaskAlertDialogState();
 }
 
-class _UpdateTaskAlertDialogState extends State<UpdateTaskAlertDialog> {
+class _AddTaskAlertDialogState extends State<AddTaskAlertDialog> {
   final TextEditingController taskNameController = TextEditingController();
   final TextEditingController taskDescController = TextEditingController();
 
@@ -29,15 +20,12 @@ class _UpdateTaskAlertDialogState extends State<UpdateTaskAlertDialog> {
 
   @override
   Widget build(BuildContext context) {
-    taskNameController.text = widget.taskName;
-    taskDescController.text = widget.taskDesc;
-
     var width = MediaQuery.of(context).size.width;
     var height = MediaQuery.of(context).size.height;
     return AlertDialog(
       scrollable: true,
       title: const Text(
-        'Update Task',
+        'New Task',
         textAlign: TextAlign.center,
         style: TextStyle(fontSize: 16, color: Colors.brown),
       ),
@@ -90,7 +78,6 @@ class _UpdateTaskAlertDialogState extends State<UpdateTaskAlertDialog> {
                   const SizedBox(width: 15.0),
                   Expanded(
                     child: DropdownButtonFormField(
-                      value: widget.taskTag,
                       decoration: InputDecoration(
                         isDense: true,
                         border: OutlineInputBorder(
@@ -145,52 +132,31 @@ class _UpdateTaskAlertDialogState extends State<UpdateTaskAlertDialog> {
           onPressed: () {
             final taskName = taskNameController.text;
             final taskDesc = taskDescController.text;
-            var taskTag = '';
-            selectedValue == ''
-                ? taskTag = widget.taskTag
-                : taskTag = selectedValue;
-            _updateTasks(taskName, taskDesc, taskTag);
+            final taskTag = selectedValue;
+            _addTasks(taskName, taskDesc, taskTag);
             Navigator.of(context, rootNavigator: true).pop();
           },
-          child: const Text('Update'),
+          child: const Text('Save'),
         ),
       ],
     );
   }
 
-  Future _updateTasks(taskName, taskDesc, taskTag) async {
+  Future _addTasks(taskName, taskDesc, taskTag) async {
     final FirebaseFirestore firestore = widget.firestore;
 
-    var collection =
-        firestore.collection('tasks'); // fetch the collection name i.e. tasks
-    collection
-        .doc(widget
-            .taskId) // ensure the right task is updated by referencing the task id in the method
-        .update({
-          'taskName': taskName,
-          'taskDesc': taskDesc,
-          'taskTag': taskTag
-        }) // the update method will replace the values in the db, with these new values from the update alert dialog box
-        .then(
-          // implement error handling
-          (_) => Fluttertoast.showToast(
-              msg: "Task updated successfully",
-              toastLength: Toast.LENGTH_LONG,
-              gravity: ToastGravity.SNACKBAR,
-              timeInSecForIosWeb: 1,
-              backgroundColor: Colors.black54,
-              textColor: Colors.white,
-              fontSize: 14.0),
-        )
-        .catchError(
-          (error) => Fluttertoast.showToast(
-              msg: "Failed: $error",
-              toastLength: Toast.LENGTH_SHORT,
-              gravity: ToastGravity.SNACKBAR,
-              timeInSecForIosWeb: 1,
-              backgroundColor: Colors.black54,
-              textColor: Colors.white,
-              fontSize: 14.0),
-        );
+    DocumentReference docRef = await firestore
+        .collection('tasks')
+        .add({'taskName': taskName, 'taskDesc': taskDesc, 'taskTag': taskTag});
+    String taskId = docRef.id;
+    await FirebaseFirestore.instance.collection('tasks').doc(taskId).update(
+      {'id': taskId},
+    );
+    _clearAll();
+  }
+
+  void _clearAll() {
+    taskNameController.clear();
+    taskDescController.clear();
   }
 }

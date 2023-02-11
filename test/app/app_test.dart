@@ -8,11 +8,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fake_cloud_firestore/fake_cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_firebase_todo/tasks.dart';
+import 'package:flutter_firebase_todo/app/app.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
-  testWidgets('tasks widget test', (WidgetTester tester) async {
+  testWidgets('main test', (WidgetTester tester) async {
     final firestore = FakeFirebaseFirestore();
 
     DocumentReference docRef = await firestore
@@ -26,10 +26,8 @@ void main() {
 
     // Build our app and trigger a frame.
     await tester.pumpWidget(MaterialApp(
-      home: Scaffold(
-        body: Tasks(
-          firestore: firestore,
-        ),
+      home: TodoApp(
+        firestore: firestore,
       ),
     ));
 

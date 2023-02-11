@@ -1,8 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_firebase_todo/tasks.dart';
+import 'package:flutter_firebase_todo/widgets/tasks.dart';
 
-import 'add_task_alert_dialog.dart';
+import '../widgets/add_task_alert_dialog.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key, required this.firestore, required this.title});

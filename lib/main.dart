@@ -1,8 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_firebase_todo/app_config.dart';
-import 'package:flutter_firebase_todo/home_page.dart';
+import 'package:flutter_firebase_todo/app/app.dart';
+import 'package:flutter_firebase_todo/app/app_config.dart';
 
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -27,22 +27,4 @@ Future<List<String>> fetchTags() async {
     tags.add(data["title"]);
   }
   return tags;
-}
-
-class TodoApp extends StatelessWidget {
-  final FirebaseFirestore firestore;
-
-  const TodoApp({super.key, required this.firestore});
-
-  // This widget is the root of your application.
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: HomePage(title: 'To-Do List', firestore: firestore),
-    );
-  }
 }
